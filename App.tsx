@@ -22,7 +22,7 @@ const App = () => {
           </TouchableOpacity>
           )}
           horizontal={true}
-            keyExtractor={(item)=> item.id + '_'}
+          keyExtractor={(item)=> item.id + '_'}
           />
         </View>
       </View>
