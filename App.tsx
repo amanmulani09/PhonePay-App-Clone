@@ -1,118 +1,70 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
+import { scale, verticalScale } from 'react-native-size-matters'
+import { tabData } from './src/data/contant'
+const App = () => {
+  const [selectedTab,setSelectedTab] = useState(0)
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+    <View style={styles.container}>
+      <View style={styles.bottomNav}>
+        <View style={styles.bottomNavInner}>
+          <FlatList
+          style={{width:'100%',marginLeft:10}}
+          data={tabData}
+          renderItem={({item,index})=>(
+            <TouchableOpacity style={styles.bottomTab} onPress={()=> setSelectedTab(index)}>
+            <View style={[styles.tabIconContainer,{backgroundColor:index === selectedTab ? "purple" : '#bdbdbd'}]}>
+            <Image source={item.imagePath}
+            style={styles.tabIcon}
+            />
+            </View>
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          </TouchableOpacity>
+          )}
+          horizontal={true}
+            keyExtractor={(item)=> item.id + '_'}
+          />
         </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+      </View>
+    </View>
+  )
 }
+
+export default App
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container:{
+    flex:1,
+    backgroundColor:'white'
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  bottomNav:{
+    width:'100%',
+    height:verticalScale(70),
+    backgroundColor:'#f2f2f2',
+    position:'absolute',
+    bottom:0
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  bottomNavInner:{
+    width:'100%',
+    height:verticalScale(55),
+    justifyContent:'center',
+    alignItems:'center',
+    flexDirection:'row'
   },
-  highlight: {
-    fontWeight: '700',
+  bottomTab:{
+    width:'44%',
+    height:'100%'
   },
-});
-
-export default App;
+  tabIcon:{
+    width:scale(18),
+    height:scale(18),
+    tintColor:'white'
+  },
+  tabIconContainer:{
+    width:scale(34),
+    height:scale(34),
+    borderRadius:scale(17),
+    justifyContent:'center',
+    alignItems:'center'
+  }
+})
