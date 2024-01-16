@@ -9,15 +9,15 @@ const App = () => {
       <View style={styles.bottomNav}>
         <View style={styles.bottomNavInner}>
           <FlatList
-          style={{width:'100%',marginLeft:10}}
           data={tabData}
           renderItem={({item,index})=>(
             <TouchableOpacity style={styles.bottomTab} onPress={()=> setSelectedTab(index)}>
-            <View style={[styles.tabIconContainer,{backgroundColor:index === selectedTab ? "purple" : '#bdbdbd'}]}>
+            <View style={[styles.tabIconContainer,{backgroundColor:index === selectedTab ? "#6739B7" : '#bdbdbd'}]}>
             <Image source={item.imagePath}
             style={styles.tabIcon}
             />
             </View>
+            <Text style={styles.navTitle}>{item.title}</Text>
 
           </TouchableOpacity>
           )}
@@ -52,19 +52,26 @@ const styles = StyleSheet.create({
     flexDirection:'row'
   },
   bottomTab:{
-    width:'44%',
-    height:'100%'
+    width:verticalScale(60),
+    marginLeft:verticalScale(2),
+    justifyContent:'center',
+    alignItems:'center'
   },
   tabIcon:{
-    width:scale(18),
-    height:scale(18),
+    width:scale(14),
+    height:scale(13),
     tintColor:'white'
   },
   tabIconContainer:{
-    width:scale(34),
-    height:scale(34),
+    width:scale(25),
+    height:scale(25),
     borderRadius:scale(17),
     justifyContent:'center',
     alignItems:'center'
+  },
+  navTitle:{
+    fontSize:12,
+    marginTop:5,
+    color:''
   }
 })
